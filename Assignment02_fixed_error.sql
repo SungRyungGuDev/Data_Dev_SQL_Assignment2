@@ -24,6 +24,7 @@ DECLARE
 		FROM wkis_error_log 
 		ORDER BY transaction_no
 	FOR UPDATE NOWAIT;		
+	--DECLARE using values
 	v_transaction_no transaction_detail.transaction_no%TYPE; 
 	v_transaction_date transaction_history.transaction_date%TYPE; 
 	v_description transaction_history.description%TYPE; 
@@ -37,12 +38,13 @@ DECLARE
 	v_transaction_amount_sum number := 0; 
 	v_debit_amount number := 0; 
 	v_credit_amount number := 0; 
-	v_transaction_type_count number := 0; --DECLAREError 
+	v_transaction_type_count number := 0; 
+	--DECLARE Error Exception
+	v_debit_credit_not_equal EXCEPTION;
 	v_missing_transaction_no EXCEPTION; 
 	v_invalid_account_no EXCEPTION; 
 	v_negative_value EXCEPTION; 
 	v_invalid_transaction_type EXCEPTION; 
-	v_debit_credit_not_equal EXCEPTION;
 	v_sqlerrormsg VARCHAR2(50) := sqlerrm;
 BEGIN 
 	OPEN c_new_transactions; 
